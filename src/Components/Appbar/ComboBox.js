@@ -3,11 +3,13 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { CircularProgress,} from '@mui/material';
 
+
 const loading = false ;
 
 export default function ComboBox(props) {
   
-  const [value,setValue] = React.useState('');
+  const value='';
+  const loading=false;
   const words = props.words.map((e) => ({label:e.name, date:e.date}));
 
   return (
@@ -19,14 +21,14 @@ export default function ComboBox(props) {
       defaultValue
       clearOnEscape
       noOptionsText = 'Sorry, you did not add it!'
-      loading={false}
+      loading={loading}
       onChange={(e,value) => {
         props.addDate(value.date,value.date);
       }}
       options={words}
       sx={{  minWidth:'200px', flexGrow:1,mr:'4px',ml:'4px'}}
       renderInput={(params) =>
-         <TextField {...params} label="Type your word" variant="standard" sx={{pb:'16px'}}  InputProps={{
+         <TextField {...params}  label="Type your word" variant="standard" sx={{pb:'16px'}}  InputProps={{
           ...params.InputProps,
           endAdornment: (
             <React.Fragment>

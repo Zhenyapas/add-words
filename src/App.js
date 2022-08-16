@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { Container, CssBaseline,Box } from '@mui/material';
 import { ThemeProvider, createTheme, } from '@mui/material/styles';
 import SearchAppBar from './Components/Appbar/Appbar';
@@ -81,11 +81,12 @@ function App() {
          
             <Container maxWidth={'md'}>
 
-              <SearchAppBar words={state.words} addDate={addDate} />
+              <SearchAppBar words={state.words} addDate={addDate} {...state} />
               <Layout  >
+
                 <StaticDatePickerLandscape {...state} addDate={addDate}  />
                 <WordsList {...state} changeSelect={changeSelect}/>
-
+                
 
               </Layout>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Word from './Word';
 import List from '@mui/material/List';
 import { Box,} from '@mui/material';
+import AddNewWord from './Buttons/AddNewWordButton';
 
 
 const listStyle = {
@@ -51,7 +52,9 @@ export default function WordsList(props) {
      selected={select(elem.date,props.selectedDay)} name={elem.name} changeSelect={props.changeSelect} />)}
 
     </List>
+    
     }
+    {(func(props.date) === func(new Date())) && <AddNewWord sx={{mt:'20px'}} {...props}/>}
     </>
   );
 }

@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { Children } from "react";
 import {Box, useMediaQuery, useTheme} from '@mui/material';
 
 import {styled,} from '@mui/material/styles';
 
 
 
-const BoxScroll = styled(Box)(({ theme }) => ({
+const BoxCustom = styled(Box)(({ theme }) => ({
 
 
   scrollbarColor: "#6b6b6b #2b2b2b",
@@ -21,14 +21,12 @@ const BoxScroll = styled(Box)(({ theme }) => ({
 
 const layoutStyle = {
 desktop:{
-  minHeight:'600px',
   display: 'grid', 
   gridTemplateColumns: '1fr 1fr 1fr', 
-  gridTemplateRows: '1fr 1fr 1fr', 
   gap: '3px 3px', 
   gridTemplateAreas: 
     `"box1 box1 box2"
-     "box4 box3 box3"` ,
+     "box3 box3 box4"` ,
  },
 mobile : {
     minHeight:'100vh',
@@ -46,7 +44,7 @@ item: {
     justifyContent:'center',
     }
     if(index === 1) return {...obj,justifyContent:'flex-start',pl:4.5};
-    if(index === 2) return {...obj,justifyContent:'flex-start',overflow: 'auto',height:'400px',flexDirection:'column'};
+    if(index === 2) return {...obj,justifyContent:'flex-start',overflow: 'auto',flexDirection:'column'};
     return obj
   },
  mobile: function(index) {
@@ -69,29 +67,28 @@ export default function Layout(props) {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-    const device = matches ? 'desktop' : 'mobile'; 
-    const [nothing,calendar=null,list,words,phrase] = [null,...props.children];
+    const {children} = props;
+
+    const device = matches ? 'desktop' : 'mobile';
+    const [calendar=children,list,words,phrase] = (Array.isArray(children)) ? [...children] : [];
+    
 
   return (
     
-          
-
-              <BoxScroll sx={layoutStyle[device]} >
+              <BoxCustom sx={layoutStyle[device]} >
                 <Box sx={layoutStyle.item[device](1)}>
                     {calendar}
                 </Box>
-                <Box sx={layoutStyle.item[device](3)}>
+                <Box sx={layoutStyle.item[device](4)}>
                     {words}
                 </Box>
                 <Box sx={layoutStyle.item[device](2)}>
                     {list}
                 </Box>
-                <Box sx={layoutStyle.item[device](4)}>
+                <Box sx={layoutStyle.item[device](3)}>
                     {phrase}
                 </Box>
-              </BoxScroll>
+              </BoxCustom>
 
-            
-   
   );
 }
