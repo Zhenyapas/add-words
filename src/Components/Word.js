@@ -11,7 +11,8 @@ export default function Word({name,date,selected,changeSelect}) {
     const time = date.getHours() + ':' + ((date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes()) ;
     const word = name;
     const setSelect = () => {
-      changeSelect(date);
+      if(selected) changeSelect(false);
+      if(!selected) changeSelect(date);
     }
   return (
 

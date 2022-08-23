@@ -1,5 +1,5 @@
 
-import React, {useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { Container, CssBaseline,Box } from '@mui/material';
 import { ThemeProvider, createTheme, } from '@mui/material/styles';
 import SearchAppBar from './Components/Appbar/Appbar';
@@ -53,11 +53,31 @@ const store = { words : [
 selectedDay: false,
 date: new Date(),
 }
+const defaultState = {
+  words : [],
+  selectedDay: false,
+  date: new Date(),
+}
 
 function App() {
 
-  const [state,setState] = useState(store);
+  const [state,setState] = useState(defaultState);
 
+  const delay = (ms) => {
+    return new Promise((r)=> {setTimeout(r,ms)})
+  }
+
+  async function getStore() {
+    await delay(10000);
+    return setState({...store,loading:false});
+  }
+
+  
+  
+ useEffect(() => {
+   console.log('RENDER APP');
+   getStore();
+  },[])
   
 
   const addDate = (date,selectedDay) => {
@@ -66,6 +86,10 @@ function App() {
 
   const changeSelect = (selectedDay) => {
     setState({...state,selectedDay})
+  }
+
+  const addNewWord = ({name,translation, date}) => {
+    setState({...state,words:[...state.words,{name,translation,date}]})
   }
 
   
@@ -85,7 +109,7 @@ function App() {
               <Layout  >
 
                 <StaticDatePickerLandscape {...state} addDate={addDate}  />
-                <WordsList {...state} changeSelect={changeSelect}/>
+                <WordsList {...state} changeSelect={changeSelect} addNewWord={addNewWord}/>
                 
 
               </Layout>

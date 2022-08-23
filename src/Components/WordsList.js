@@ -54,7 +54,7 @@ export default function WordsList(props) {
     </List>
     
     }
-    {(func(props.date) === func(new Date())) && <AddNewWord sx={{mt:'20px'}} {...props}/>}
+    {(func(props.date) === func(new Date())) && <AddNewWord sx={{mt:'20px'}} addNewWord={props.addNewWord} {...props}/>}
     </>
   );
 }

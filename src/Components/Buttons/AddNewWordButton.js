@@ -34,11 +34,13 @@ export default function AddNewWord(props) {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
     setOpen(false);
     setValue({name:'',translation:''});
     setInputName({label:'Type a word.',warningColor:false});
     setDisabled(true);
+
+    if(e.target.id === 'button-add-word') props.addNewWord({name:value.name,translation:value.translation,date:new Date()})
 
   };
   const handleChange = (e) => {
@@ -93,7 +95,7 @@ export default function AddNewWord(props) {
         </DialogContent>
         <DialogActions sx={{backgroundColor:'background.paper',}}>
           <Button onClick={handleClose}  sx={{mb:1}}>Cancel</Button>
-          <Button onClick={handleClose} disabled={disabled} sx={{mr:1,mb:1}}>Add word</Button>
+          <Button id='button-add-word' onClick={handleClose} disabled={disabled} sx={{mr:1,mb:1}}>Add word</Button>
         </DialogActions>
       </Dialog>
     </div>
