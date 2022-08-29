@@ -19,10 +19,8 @@ export default function SearchAppBar(props) {
             <Box sx={style} >
               <IconButton
                 size="large"
-                
                 color="inherit"
                 aria-label="menu"
-                sx={{   }}
               >
                 <MenuIcon />
 

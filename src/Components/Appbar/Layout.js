@@ -25,8 +25,7 @@ desktop:{
   gridTemplateColumns: '1fr 1fr 1fr', 
   gap: '3px 3px', 
   gridTemplateAreas: 
-    `"box1 box1 box2"
-     "box3 box3 box4"` ,
+    `"box1 box1 box2"` ,
  },
 mobile : {
     minHeight:'100vh',
@@ -39,22 +38,21 @@ item: {
  desktop:function(index) {
    let obj = {
     gridArea:'box'+ index,
-    minHeight: '200px',
     display: 'flex',
-    justifyContent:'center',
+    justifyContent:'flex-start',
     }
-    if(index === 1) return {...obj,justifyContent:'flex-start',pl:4.5};
-    if(index === 2) return {...obj,justifyContent:'flex-start',overflow: 'auto',flexDirection:'column'};
+    if(index === 1) return {...obj,pl:4.5};
+    if(index === 2) return {...obj,overflow:'auto',flexDirection:'column'};
     return obj
   },
  mobile: function(index) {
     return {
     order:index,
-    backgroundColor:'primary.dark',
     borderRadius:1.5,
     mb:'8px',
     flexGrow:1,
     display: 'flex',
+    flexDirection:'column',
     justifyContent:'center',
     }
   }   
@@ -79,14 +77,8 @@ export default function Layout(props) {
                 <Box sx={layoutStyle.item[device](1)}>
                     {calendar}
                 </Box>
-                <Box sx={layoutStyle.item[device](4)}>
-                    {words}
-                </Box>
                 <Box sx={layoutStyle.item[device](2)}>
-                    {list}
-                </Box>
-                <Box sx={layoutStyle.item[device](3)}>
-                    {phrase}
+                    {list} 
                 </Box>
               </BoxCustom>
 

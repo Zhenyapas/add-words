@@ -5,8 +5,6 @@ import { CircularProgress,} from '@mui/material';
 
 
 
-const loading = false ;
-
 export default function ComboBox(props) {
   
   const value='';
@@ -58,4 +56,4 @@ export default function ComboBox(props) {
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
+

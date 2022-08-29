@@ -26,6 +26,7 @@ export default function AddNewWord(props) {
       case 'translation' : setInputTranslation((error) ? {label:'You had this translation',warningColor:'warning'}:{label:'Type translation.'});
       (!error) && setDisabled(false);
       (error)  && setDisabled(true);
+      break;
     }
 
   }
@@ -35,12 +36,14 @@ export default function AddNewWord(props) {
   };
 
   const handleClose = (e) => {
+
+    if(e.target.id === 'button-add-word') props.addNewWord({name:value.name,translation:value.translation,date:new Date()})
     setOpen(false);
     setValue({name:'',translation:''});
     setInputName({label:'Type a word.',warningColor:false});
     setDisabled(true);
 
-    if(e.target.id === 'button-add-word') props.addNewWord({name:value.name,translation:value.translation,date:new Date()})
+   
 
   };
   const handleChange = (e) => {

@@ -1,11 +1,12 @@
 
 import React, {useEffect, useState } from 'react';
-import { Container, CssBaseline,Box } from '@mui/material';
+import { Container, CssBaseline,} from '@mui/material';
 import { ThemeProvider, createTheme, } from '@mui/material/styles';
 import SearchAppBar from './Components/Appbar/Appbar';
 import Layout from './Components/Appbar/Layout';
 import StaticDatePickerLandscape from './Components/Calendar';
 import WordsList from './Components/WordsList';
+
 
 const darkTheme = createTheme({
   palette: {
@@ -45,18 +46,20 @@ const darkTheme = createTheme({
 });
 
 const store = { words : [
-  {name:'Goverment', translation:'правительство', date:'January 25, 2022 23:15:41'},
-  {name:'It is a real treat', translation:'это большое удовольствие', date:'January 25, 2022 23:15:30'},
-  {name:'Excited', translation:'взволнован', date: 'January 25, 2022 22:15:30'},
-  {name:'Cheer up', translation:'Выше нос!', date: 'March 25, 2022 12:15:30'},
+  {name:'Goverment', translation:'правительство', date:['January 25, 2022 23:15:41']},
+  {name:'It is a real treat', translation:'это большое удовольствие', date:['January 25, 2022 23:15:30',]},
+  {name:'Excited', translation:'взволнован', date: ['January 25, 2022 22:15:30']},
+  {name:'Cheer up', translation:'Выше нос!', date: ['March 25, 2022 12:15:30']},
 ],
 selectedDay: false,
 date: new Date(),
+loading:true,
 }
 const defaultState = {
   words : [],
   selectedDay: false,
   date: new Date(),
+  loading:true,
 }
 
 function App() {
@@ -69,16 +72,18 @@ function App() {
 
   async function getStore() {
     await delay(10000);
-    return setState({...store,loading:false});
+     setState({...store,loading:false});
   }
 
   
   
  useEffect(() => {
    console.log('RENDER APP');
+  
    getStore();
   },[])
-  
+ 
+
 
   const addDate = (date,selectedDay) => {
     setState({...state,date,selectedDay})
@@ -89,7 +94,28 @@ function App() {
   }
 
   const addNewWord = ({name,translation, date}) => {
+
+  
+
+
+   
+    
+    let index = state.words.findIndex((e) => e.name.toLowerCase() === name.toLowerCase());
+    if(index !== -1){
+      
+      console.log('Index Render');
+      const newArr = [...state.words];
+      const refreshDate =[...state.words[index].date,date];
+      newArr.splice(index,1,{name,translation,date:refreshDate});
+      console.log(newArr);
+
+      return
+
+    }
+
     setState({...state,words:[...state.words,{name,translation,date}]})
+    
+    
   }
 
   
@@ -111,6 +137,7 @@ function App() {
                 <StaticDatePickerLandscape {...state} addDate={addDate}  />
                 <WordsList {...state} changeSelect={changeSelect} addNewWord={addNewWord}/>
                 
+               
 
               </Layout>
 

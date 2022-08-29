@@ -3,11 +3,13 @@ import Word from './Word';
 import List from '@mui/material/List';
 import { Box,} from '@mui/material';
 import AddNewWord from './Buttons/AddNewWordButton';
+import VerticalLinearStepper from './StepperTasks';
 
 
 const listStyle = {
   width: '100%',
-   maxWidth: 360,
+  maxHeight:'200px',
+  overflow:'auto',
   bgcolor: 'background.paper',
 }
 const func = (day) => { 
@@ -15,8 +17,11 @@ const func = (day) => {
    return (newDay.getDate() + ' ' + newDay.getMonth() + ' ' + newDay.getFullYear())};
 
 const wordsByDay = (day,words) =>  words.filter((elem) => { 
+ 
   return (func(elem.date) === func(day))
+
 });
+
 
 export default function WordsList(props) {
 
@@ -44,7 +49,7 @@ export default function WordsList(props) {
   return (
     <>
     <Box sx={{ width: '100%',mt:2,pl:1.5, maxWidth: 360, bgcolor: 'background.paper',}}>{(words.length !== 0) ? 'Words you added:': `Sorry, you didn't add words ${yourDay} `}</Box>
-    {(words.length != false) && 
+    {(words.length !== false) && 
     
     <List sx={listStyle} aria-label="word">
 
@@ -54,7 +59,10 @@ export default function WordsList(props) {
     </List>
     
     }
-    {(func(props.date) === func(new Date())) && <AddNewWord sx={{mt:'20px'}} addNewWord={props.addNewWord} {...props}/>}
+    {(func(props.date) === func(new Date())) && <>
+    <AddNewWord sx={{mt:'20px'}} addNewWord={props.addNewWord} {...props}/>
+    <VerticalLinearStepper countWords={words.length} countSentences={5} takenDailyTest={true} />
+    </>}
     </>
   );
 }
