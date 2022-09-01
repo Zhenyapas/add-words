@@ -17,17 +17,11 @@ const func = (day) => {
    return (newDay.getDate() + ' ' + newDay.getMonth() + ' ' + newDay.getFullYear())};
 
 const wordsByDay = (day,words) =>  words.filter((elem) => { 
- 
-  return (func(elem.date) === func(day))
+  
+  return elem.date.map((el) => func(el) === func(day)).includes(true);
 
 });
-
-
-export default function WordsList(props) {
-
-  let words = wordsByDay(props.date,props.words);
-  console.log('Wordlist render');
-  const select = (elemDate,propsDate) => {
+const select = (elemDate,propsDate) => {
 
     elemDate = new Date(elemDate);
     propsDate = new Date(propsDate);
@@ -43,7 +37,14 @@ export default function WordsList(props) {
     const months = ['Jan','Feb','March','April','May','June','July','Aug','Sep','Oct','Nov','Dec']
     return  'on ' + days[date1.getDay()] + ', in ' + months[date1.getMonth()] + ' ' + date1.getDate()  ;
   }
+
+export default function WordsList(props) {
+
+  let words = wordsByDay(props.date,props.words);
+  console.log('Wordlist render');
   const yourDay=dateParse(props.date);
+
+
 
     
   return (
@@ -53,9 +54,11 @@ export default function WordsList(props) {
     
     <List sx={listStyle} aria-label="word">
 
-    {words.map((elem,i) => <Word date={elem.date} key={'list' + i}
-     selected={select(elem.date,props.selectedDay)} name={elem.name} changeSelect={props.changeSelect} />)}
-
+    {words.map((elem,i) => {
+        let date = elem.date.find((e) => func(e) === func(props.date)); 
+        return <Word date={date} key={'list' + i}
+        selected={select(date,props.selectedDay)} name={elem.name} changeSelect={props.changeSelect} />
+        })}
     </List>
     
     }

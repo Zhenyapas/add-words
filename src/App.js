@@ -46,10 +46,10 @@ const darkTheme = createTheme({
 });
 
 const store = { words : [
-  {name:'Goverment', translation:'правительство', date:['January 25, 2022 23:15:41']},
-  {name:'It is a real treat', translation:'это большое удовольствие', date:['January 25, 2022 23:15:30',]},
-  {name:'Excited', translation:'взволнован', date: ['January 25, 2022 22:15:30']},
-  {name:'Cheer up', translation:'Выше нос!', date: ['March 25, 2022 12:15:30']},
+  {name:'Goverment', translation:['правительство'], date:['January 25, 2022 23:15:41']},
+  {name:'It is a real treat', translation:['это большое удовольствие'], date:['January 25, 2022 23:15:30',]},
+  {name:'Excited', translation:['взволнован'], date: ['January 25, 2022 22:15:30']},
+  {name:'Cheer up', translation:['Выше нос!'], date: ['January 25, 2022 22:05:20',]},
 ],
 selectedDay: false,
 date: new Date(),
@@ -79,7 +79,6 @@ function App() {
   
  useEffect(() => {
    console.log('RENDER APP');
-  
    getStore();
   },[])
  
@@ -105,15 +104,14 @@ function App() {
       
       console.log('Index Render');
       const newArr = [...state.words];
-      const refreshDate =[...state.words[index].date,date];
-      newArr.splice(index,1,{name,translation,date:refreshDate});
+      newArr.splice(index,1,{name,translation,date:[...newArr[index].date,date]});
       console.log(newArr);
 
-      return
+      return setState({...state,words:newArr});
 
     }
 
-    setState({...state,words:[...state.words,{name,translation,date}]})
+    setState({...state,words:[...state.words,{name,translation,date:[date]}]})
     
     
   }
@@ -131,7 +129,7 @@ function App() {
          
             <Container maxWidth={'md'}>
 
-              <SearchAppBar words={state.words} addDate={addDate} {...state} />
+              <SearchAppBar  addDate={addDate} {...state} />
               <Layout  >
 
                 <StaticDatePickerLandscape {...state} addDate={addDate}  />

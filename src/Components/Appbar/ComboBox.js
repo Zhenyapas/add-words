@@ -39,7 +39,7 @@ export default function ComboBox(props) {
       noOptionsText = 'Sorry, you did not add it!'
       loading={loading}
       onChange={(e,value) => {
-        props.addDate(value.date,value.date);
+        props.addDate(value.date[value.date.length-1],value.date[value.date.length-1]);
       }}
       options={options}
       sx={{  minWidth:'200px', flexGrow:1,mr:'4px',ml:'4px'}}

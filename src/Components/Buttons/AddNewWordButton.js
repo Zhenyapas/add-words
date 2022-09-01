@@ -48,7 +48,13 @@ export default function AddNewWord(props) {
   };
   const handleChange = (e) => {
     
-    let wordsArr =  props.words.map((elem) => elem[e.target.id].toLowerCase());
+    let wordsArr =  props.words.map((elem) => {
+      if(Array.isArray(elem[e.target.id])) {
+         elem[e.target.id].forEach((str) => str.toLowerCase());
+         return elem[e.target.id]
+      }
+      return elem[e.target.id].toLowerCase()
+    }).flat();
     
     setValue({...value,[e.target.id]:e.target.value});
 

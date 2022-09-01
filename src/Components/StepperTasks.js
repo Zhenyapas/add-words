@@ -4,7 +4,6 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
-import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
@@ -75,7 +74,7 @@ const steps = funcSteps(props.countWords,props.countSentences);
       </Stepper>
       {activeStep === steps.length && (
         <Paper square elevation={0} sx={{ p: 0 }}>
-          <Typography sx={{ml:'10px'}}>All steps completed - you&apos;re finished</Typography>
+          <Typography sx={{ml:'10px'}}>All steps completed - you're finished</Typography>
         </Paper>
       )}
     </Box>
