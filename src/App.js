@@ -49,7 +49,7 @@ const store = { words : [
   {name:'Goverment', translation:['правительство'], date:['January 25, 2022 23:15:41']},
   {name:'It is a real treat', translation:['это большое удовольствие'], date:['January 25, 2022 23:15:30',]},
   {name:'Excited', translation:['взволнован'], date: ['January 25, 2022 22:15:30']},
-  {name:'Cheer up', translation:['Выше нос!'], date: ['January 25, 2022 22:05:20',]},
+  {name:'Cheer up', translation:['выше нос!'], date: ['January 25, 2022 22:05:20',]},
 ],
 selectedDay: false,
 date: new Date(),
@@ -104,14 +104,14 @@ function App() {
       
       console.log('Index Render');
       const newArr = [...state.words];
-      newArr.splice(index,1,{name,translation,date:[...newArr[index].date,date]});
+      newArr.splice(index,1,{name,translation:[...newArr[index].translation,translation],date:[...newArr[index].date,date]});
       console.log(newArr);
 
       return setState({...state,words:newArr});
 
     }
 
-    setState({...state,words:[...state.words,{name,translation,date:[date]}]})
+    setState({...state,words:[...state.words,{name,translation:[translation],date:[date]}]})
     
     
   }

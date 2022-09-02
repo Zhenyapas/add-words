@@ -13,19 +13,41 @@ export default function AddNewWord(props) {
   const [inputName,setInputName] = useState({label:'Type a word.',warningColor:false});
   const [inputTranslation, setInputTranslation] = useState({label:'Type translation.', warningColor:false});
   const [disabled,setDisabled] = useState(true);
-  
+  const [index, setIndex] = useState(false);
+
   console.log('Render Dialog!')
 
-  const setInput= (id,error=false) => {
-  
+  const setInput= (e) => {
+    
+    let id = e.target.id;
+    let value = e.target.value
+
+    console.log(index);
+    
+
     switch(id){
       case 'name' : 
-      setInputName((error) ? {label:'You added this one',warningColor:'warning'} : {label:'Type a word.',warningColor:false});
-      (error) && setInputTranslation({label:'Additional word translation'});
+      let indexError = props.words.findIndex((elem) => elem.name.toLowerCase().trim() === value.toLowerCase().trim());
+      if(indexError !== -1) {
+        setIndex(indexError);
+        setInputName({label:'You added this one',warningColor:'warning'});
+        setInputTranslation({label:'Additional word translation'});
+      }
       break;
-      case 'translation' : setInputTranslation((error) ? {label:'You had this translation',warningColor:'warning'}:{label:'Type translation.'});
-      (!error) && setDisabled(false);
-      (error)  && setDisabled(true);
+
+      case 'translation' :
+      let error = (index) ? props.words[index].translation.map((elem) => elem.toLowerCase().trim())
+      .includes(e.target.value.toLowerCase().trim()) : false;
+      
+      if(error){
+        setInputTranslation({label:'You had this translation',warningColor:'warning'}); 
+        setDisabled(true);
+      }  
+      if(!error) {
+        setDisabled(false);
+        setInputTranslation((index) ? {label:'Another one translation'} : {label:'Translation of the word'})
+        setIndex(false);
+      }
       break;
     }
 
@@ -46,25 +68,12 @@ export default function AddNewWord(props) {
    
 
   };
+ 
   const handleChange = (e) => {
     
-    let wordsArr =  props.words.map((elem) => {
-      if(Array.isArray(elem[e.target.id])) {
-         elem[e.target.id].forEach((str) => str.toLowerCase());
-         return elem[e.target.id]
-      }
-      return elem[e.target.id].toLowerCase()
-    }).flat();
-    
     setValue({...value,[e.target.id]:e.target.value});
-
-    if(wordsArr.includes(e.target.value.toLowerCase().trim())) { 
-
-        setInput(e.target.id,true);
-        
-      } else {
-        setInput(e.target.id);
-      }
+    setInput(e);
+    
   };
 
   return (
