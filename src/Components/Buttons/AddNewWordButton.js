@@ -36,9 +36,10 @@ export default function AddNewWord(props) {
       break;
 
       case 'translation' :
+      console.log(index.current);
       let error = (index.current) ? props.words[index.current].translation.map((elem) => elem.toLowerCase().trim())
       .includes(e.target.value.toLowerCase().trim()) : false;
-      console.log(props.words[index.current].translation.map((elem) => elem.toLowerCase().trim()));
+      console.log(!error);
       
       if(error){
         setInputTranslation({label:'You had this translation',warningColor:'warning'}); 
