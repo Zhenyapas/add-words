@@ -1,4 +1,4 @@
-import  {React,useState} from 'react';
+import  {React,useState,useRef} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -13,7 +13,7 @@ export default function AddNewWord(props) {
   const [inputName,setInputName] = useState({label:'Type a word.',warningColor:false});
   const [inputTranslation, setInputTranslation] = useState({label:'Type translation.', warningColor:false});
   const [disabled,setDisabled] = useState(true);
-  const [index, setIndex] = useState(false);
+  const index = useRef(false);
 
   console.log('Render Dialog!')
 
@@ -29,15 +29,16 @@ export default function AddNewWord(props) {
       case 'name' : 
       let indexError = props.words.findIndex((elem) => elem.name.toLowerCase().trim() === value.toLowerCase().trim());
       if(indexError !== -1) {
-        setIndex(indexError);
+        index.current = indexError;
         setInputName({label:'You added this one',warningColor:'warning'});
         setInputTranslation({label:'Additional word translation'});
       }
       break;
 
       case 'translation' :
-      let error = (index) ? props.words[index].translation.map((elem) => elem.toLowerCase().trim())
+      let error = (index.current) ? props.words[index.current].translation.map((elem) => elem.toLowerCase().trim())
       .includes(e.target.value.toLowerCase().trim()) : false;
+      console.log(props.words[index.current].translation.map((elem) => elem.toLowerCase().trim()));
       
       if(error){
         setInputTranslation({label:'You had this translation',warningColor:'warning'}); 
@@ -45,8 +46,7 @@ export default function AddNewWord(props) {
       }  
       if(!error) {
         setDisabled(false);
-        setInputTranslation((index) ? {label:'Another one translation'} : {label:'Translation of the word'})
-        setIndex(false);
+        setInputTranslation((index.current) ? {label:'Another one translation'} : {label:'Translation of the word'})
       }
       break;
     }
@@ -106,6 +106,7 @@ export default function AddNewWord(props) {
             id="translation"
             label={inputTranslation.label}
             type="text"
+            onBlur={() => index.current = false}
             autoComplete='off'
             fullWidth
             variant="standard"
