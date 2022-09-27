@@ -3,6 +3,7 @@ import Word from './Word';
 import List from '@mui/material/List';
 import { Box,} from '@mui/material';
 import AddNewWord from './Buttons/AddNewWordButton';
+import AddWord from './Buttons/AddWord';
 import VerticalLinearStepper from './StepperTasks';
 
 
@@ -63,7 +64,7 @@ export default function WordsList(props) {
     
     }
     {(func(props.date) === func(new Date())) && <>
-    <AddNewWord sx={{mt:'20px'}} addNewWord={props.addNewWord} {...props}/>
+    <AddWord sx={{mt:'20px'}} addNewWord={props.addNewWord} {...props}/>
     <VerticalLinearStepper countWords={words.length} countSentences={5} takenDailyTest={true} />
     </>}
     </>
